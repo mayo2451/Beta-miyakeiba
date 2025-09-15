@@ -1,0 +1,207 @@
+body {
+    max-width: 960px;
+    margin: 0 auto;
+}
+.menu{
+    text-align: center;
+}
+.menu_bar {
+    background-color: #f0f0f0;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+}
+.menu_bar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;  /* 横並びにする */
+}
+.menu_bar li {
+    margin: 0;
+    flex: 1;
+}
+.menu_bar a {
+    width: 100%;
+    display: block;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: gray;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+.menu_bar a:hover {
+    background-color: #555;
+    color: white;
+}
+.container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: space-between; 
+    margin: 0 40px;
+}
+.event-list {
+    width: 22%; /* ここを調整：16%〜22%程度で好みに応じて */
+    max-width: 250px; /* 画面が広すぎるときに広がりすぎないように */
+    margin-left: auto; 
+    max-height: 600px;
+    padding: 0 8px; /* ちょっと内側に余白をつけても見やすくなる */
+}
+.schedule_table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.schedule_table td{
+    border: none;
+    padding: 4px 8px;
+}
+td.schedule_date{
+    width: 15%;
+}
+td.schedule_place{
+    width: 15%; 
+}
+td.schedule_ground{
+    width: 5%; 
+}
+td.schedule_distance{
+    width: 10%; 
+}
+td.schedule_name{
+    width: 50%;
+    text-align: left;
+}
+td.schedule_time{
+    width: 10%; 
+}
+header{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px;
+}
+iframe {
+    border: none;
+}
+.promo-video{
+    flex-grow: 1;         /* ← 残りを全部使う */
+    width: auto;          /* ← 明示的な幅を消す */
+    max-width: calc(100% - 270px); /* 右のevent-listが最大250px＋余白20px程度なら */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.promo-video h2{
+    align-self: flex-start;  /* h2だけ左寄せに */
+    margin-top: 10px;        /* お好みで間隔調整 */
+}
+.promo-video.full-width {
+    width: 100%;
+}
+a {
+    text-decoration: none;
+}
+.point-top3 {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 15px;
+    margin: 20px auto;
+    max-width: 90%;
+    height: 250px;
+}
+.first-rank {
+    flex: 1;
+    background: gold;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px;
+}
+.first-title {
+    margin: 0 auto 0 0;
+}
+.second-title {
+    width: auto; 
+    height: 70px;
+    margin: 5px 0 0 5px;
+}
+.third-title {
+    width: auto; 
+    height: 70px;
+    margin: 0 0 0 5px;
+}
+.other {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 5px;
+}
+.second-rank,
+.third-rank {
+    text-align: center;
+    font-weight: bold;
+    flex: 1;
+}
+.second-rank {
+    background: silver;
+}
+.third-rank {
+    background: #cd7f32; /* 銅色 */
+}
+.first-score {
+    font-size: 4.5rem;
+    margin-bottom: 5px;
+    text-align: right;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: 10px;
+    line-height: 1;
+    color: red;
+    -webkit-text-stroke: 1.5px black;
+}
+.second-score,
+.third-score {
+    color: white;
+    margin-top: 20px;
+    margin-right: 5px;
+    font-size: 2rem;
+    -webkit-text-stroke: 1.5px black;
+}
+.first-name {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 3.5rem;
+    color: white;
+    -webkit-text-stroke: 1px black;
+}
+.second-name,
+.third-name {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 7px;
+    color: white;
+    -webkit-text-stroke: 1px black;
+}
+.top3-conteiner {
+    display: flex;
+}
+.rank-conteiner {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    gap: 5px;
+}
+.first-block {
+    width: 60%;
+}
+
+
+
+

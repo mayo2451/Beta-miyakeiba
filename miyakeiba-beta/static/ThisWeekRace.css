@@ -1,0 +1,161 @@
+.carousel {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	max-width: 600px;
+	margin: auto;
+}
+
+.carousel-inner {
+	display: flex;
+	transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+	min-width: 100%;
+	box-sizing: border-box;
+	padding: 0 1rem 0 1rem;
+}
+
+.carousel-control {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: rgba(0,0,0,0.4);
+	color: white;
+	border: none;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+}
+
+.carousel-control.prev {
+	left: 0;
+}
+
+.carousel-control.next {
+	right: 0;
+}
+
+.race-card {
+	background-color: #f0f0f0;
+	border-radius: 10px;
+	padding: 1rem;
+	margin-bottom: 1.5rem;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 上部：レース名・グレード画像・日付 */
+.race-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 1rem;
+}
+
+.race-title-group {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.race-title {
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.race-grade {
+	width: 20px;
+	height: auto;
+}
+
+.race-date {
+	font-size: 0.9rem;
+}
+
+/* 中央：画像と情報 */
+.race-body {
+	display: flex;
+	align-items: flex-start;
+	margin-top: 1rem;
+	margin: 0 1rem;
+}
+
+.race-image {
+	width: 160px;
+	height: auto;
+	border-radius: 8px;
+}
+
+.race-header .race-date {
+	font-size: 1.5rem;
+}
+
+.race-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	flex: 1;
+	width: 100%;
+}
+
+.upper-info {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+
+.text-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+
+.text-box {
+	font-weight: bold;
+	color: #333;
+	font-size: 1.2rem;
+}
+
+.lower-info {
+	text-align: left;
+	width: 100%;
+	display: block;
+}
+
+.link-box {
+	background-color: white;
+	text-decoration: none;
+	width: 63%;
+}
+
+.upper-info .link-box {
+	height: 60px; /* 任意の高さ */
+	line-height: 60px; /* テキストを中央揃えしたいなら */
+}
+
+.lower-info .link-box {
+	width: 100%;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	height: 80px; /* 予想メモを少し大きく */
+	line-height: 80px;
+}
+
+.link-box:hover {
+	background-color: #e0e0e0;
+}
+
+.text-box {
+	background-color: transparent;
+}
+
+.upper-info a, .lower-info a {
+	font-size: 1.5rem;
+}
+
+.racename {
+	font-weight: bold;
+}

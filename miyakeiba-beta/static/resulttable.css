@@ -1,0 +1,50 @@
+.result-table-container {
+   display: flex;
+   justify-content: center;
+   margin: 0 auto;
+   width: 70%; /* 任意で調整してください */
+}
+
+.result-table-container table {
+    width: 100%; /* 親要素の幅いっぱいに広げる */
+}
+
+/* 馬名が記載されたセルを左揃えに */
+.result-table-container td.horse-name {
+    text-align: left;
+}
+
+/* オッズが記載されたセルを右揃えに */
+.result-table-container td.odds {
+    text-align: right;
+}
+
+/* 「-」のオッズを中央揃えに */
+.result-table-container .odds.center {
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: 70%;
+}
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    height: 30px;
+    color: black;
+}
+.tiny {
+    width: 10%
+}
+th {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+.face {
+    width: auto; 
+    height: 30px; 
+    margin-right:5px;
+}
