@@ -1,0 +1,67 @@
+<h2>{{ race['race_name'] }}の出馬表</h2>
+{% if is_closed %}
+    <p>このレースの投票は締め切られました。</p>
+{% endif %}
+{% if entries %}
+    <form method="post">
+        <input type="hidden" name="race_id" value="{{ selected_race_id }}">
+        <div class="entry_table">
+            <table border="1" style="padding: 0 auto auto 0;">
+                <tr>
+                    {% if not is_closed %}
+                        <th class="tiny">選択</th>
+                    {% endif %}
+                    <th class="tiny">馬番</th>
+                    <th>馬名</th>
+                    <th>みんなの予想</th>
+                </tr>
+                {% for entry in entries %}
+                    <tr class="uma" 
+                        {% if is_finalized %} 
+                            data-uman="{{ loop.index }}" data-total="{{ entries|length }}"
+                        {% endif %}
+                    >
+                        {% if not is_closed %}
+                            <td class="tiny">
+                                <input type="radio" name="honmeiba" value="{{ entry['horse_name'] }}" required>
+                            </td>
+                        {% endif %}
+                        <td class="tiny">{{ loop.index }}</td>
+                        <td class="horse-name">{{ entry['horse_name'] }}</td>
+                        <td>
+                            <div style="display: flex; gap: 5px; align-items: center;">
+                                {% for voter in entry.voted_by %}
+                                    <img 
+                                        src="{{ voter.image_url }}" 
+                                        class="face" 
+                                        alt="{{ voter.username }}" 
+                                        onerror="this.style.display='none';">
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% if not is_closed %}
+            <button type="submit">本命馬を登録</button>
+        {% endif %}
+    </form>
+{% endif %}
+{% if current_user.is_authenticated and current_user.role == 'admin' %}
+    <form action="{{ url_for('result_input', race_id=race['id']) }}" method="get">
+        <button type="submit">📋 レース結果を入力</button>
+    </form>
+{% endif %}
+<script src="{{ url_for('static', filename='js/waku_color.js') }}"></script>
+
+
+
+
+
+
+
+
+
+
+

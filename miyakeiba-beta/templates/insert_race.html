@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大ヴァロ予想王</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='insertstyle.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>大ヴァロ予想王</h1>
+        </header>
+        <div class="menu_bar">
+            <div class="half-moon-a"></div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="/">全体成績</a></li>
+                    <li><a href="{{url_for('mypage')}}">マイページ</a></li>
+                    {% if session.get('role') == 'admin' %}
+                        <li><a href="{{url_for('insert_race')}}">予定追加</a></li>
+                        <li><a href="{{url_for('entry_form')}}">出馬表作成</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="half-moon-b"></div>
+        </div>
+        <form action="/insert_race" method="post">
+            <table id="raceTable">
+                <thead>
+                    <tr>
+                        <th>日付</th>
+                        <th>開催</th>
+                        <th>馬場</th>
+                        <th>距離</th>
+                        <th>レース番号</th>
+                        <th>グレード</th>
+                        <th>レース名</th>
+                        <th>発走時刻</th>
+                        <th>削除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="date" name="race_date[]" class="short-input" required></td>
+                        <td><input type="text" name="race_place[]" class="tiny-input" required></td>
+                        <td><input type="text" name="race_ground[]" class="tiny-input" required></td>
+                        <td><input type="number" name="race_distance[]" class="tiny-input" required></td>
+                        <td><input type="number" name="race_number[]" class="tiny-input"></td>
+                        <td><input type="text" name="race_grade[]" class="tiny-input" required></td>
+                        <td><input type="text" name="race_name[]" required></td>
+                        <td><input type="time" name="start_time[]" class="short-input"></td>
+                        <td><button type="button" onclick="removeRow(this)">削除</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" onclick="addRow()"">行の追加</button>
+            <input type="submit" value="追加">
+        </form>
+        <hr>
+        <h2>登録済みレース一覧</h2>
+        {% if races %}
+        <table>
+            <thead>
+                <tr>
+                    <th>日付</th>
+                    <th>開催</th>
+                    <th>馬場</th>
+                    <th>距離</th>
+                    <th>レース番号</th>
+                    <th>グレード</th>
+                    <th>レース名</th>
+                    <th>発走時刻</th>
+                    <th>削除</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for race in races %}
+                    <tr>
+                        <td>{{ race.race_date }}</td>
+                        <td>{{ race.race_place }}</td>
+                        <td>{{ race.race_ground }}</td>
+                        <td>{{ race.race_distance }}</td>
+                        <td>{{ race.race_number }}</td>
+                        <td>{{ race.race_grade }}</td>
+                        <td>{{ race.race_name }}</td>
+                        <td>{{ race.start_time }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_race') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="race_id" value="{{ race.id }}">
+                                <input type="submit" value="削除" onclick="return confirm('本当に削除しますか？')">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>レースはまだ登録されていません。</p>
+        {% endif %}
+        <script>
+        function addRow() {
+            const table = document.getElementById('raceTable').getElementsByTagName('tbody')[0];
+            const newRow = table.rows[0].cloneNode(true);
+
+            // 新しい行の中のすべての input の値をリセット
+            Array.from(newRow.querySelectorAll('input')).forEach(input => input.value = '');
+            table.appendChild(newRow);
+        }
+
+        function removeRow(button) {
+            const row = button.closest('tr');
+            const table = document.getElementById('raceTable').getElementsByTagName('tbody')[0];
+            if (table.rows.length > 1) {
+                row.remove();
+            } else {
+                alert("少なくとも1行は必要です");
+            }
+        }
+        </script>
+    </body>
+</html>

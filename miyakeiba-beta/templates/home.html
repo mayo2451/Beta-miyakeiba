@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+{% from 'macros/table_macros.html' import score_table %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大ヴァロ予想王</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='ThisWeekRace.css') }}">
+    </head>
+    <body>
+        <header>
+            <!--
+            <img 
+                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/logo/banner.png" 
+                style="width: auto; height: 125px;" 
+                class="race-grade" 
+                alt="grade" 
+                onerror="this.style.display='none';">
+            -->
+            {% include 'login_stats.html' %}
+        </header>
+        {% include 'menubar.html' %}
+        <div class="container">
+            <div class="promo-video {% if not races %}full-width{% endif %}">
+                <iframe
+                    width="320"
+                    height="180"
+                    src="https://www.youtube.com/embed/RvSBYgNaSxU?autoplay=1&mute=1&loop=1&playlist=RvSBYgNaSxU"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+                <h2>今週のレース</h2>
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        {% for race in races %}
+                            <div class="carousel-item">
+                                <div class="race-card">
+                                    <div class="race-header">
+                                        <div class="race-title-goup">
+                                            <span class="race-title">{{ race.race_name }}</span>
+                                            <img 
+                                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/race/grade/{{ race.race_grade }}.jpeg" 
+                                                style="width: 20px; height: auto;" 
+                                                class="race-grade" 
+                                                alt="grade" 
+                                                onerror="this.style.display='none';">
+                                        </div>
+                                        <span class="race-date">{{ race.race_date_display }}</span>
+                                    </div>
+                                    <div class="race-body" style="display: flex; align-items: flex-start;">
+                                        <img 
+                                            src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/race/{{ race.id }}/1.jpeg" 
+                                            style="width: 200px; margin-right: 1rem;" 
+                                            alt="race image" 
+                                            onerror="this.style.display='none';">
+                                        <div class="race-info">
+                                            <div class="upper-info">
+                                                <a href="{{ url_for('show_race_page', race_id=race['id']) }}" class="link-box">出馬表</a>
+                                                <div class="text-box">
+                                                    {{ race.race_place }}<br>
+                                                    {{ race.race_ground }}{{ race.race_distance }}m
+                                                </div>
+                                            </div>
+                                            <div class="lower-info">
+                                                <a href="/note/{{ race.id }}" class="link-box">みやけん予想メモ</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                <!-- ナビゲーションボタン -->
+                    <button class="carousel-control prev" onclick="moveSlide(-1)">←</button>
+                    <button class="carousel-control next" onclick="moveSlide(1)">→</button>
+                </div>
+            </div>
+            <div class="event-list">
+                <h2>今月のレース</h2>
+                {% if events %}
+                    <div class="race-schedule">
+                        {% for day, races in events.items() %}
+                            <div class="race-block" style="margin-bottom: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                                <!-- 日付（MM/DD（曜日）形式） -->
+                                <div class="race-date" style="font-weight: bold; margin-bottom: 0.5rem;">
+                                    {{ day }}
+                                </div>
+                                {% for race in races %}
+                                    <div class="race-info">
+                                        <div style="display: flex; align-items: center;">
+                                            <a href="{{ url_for('show_race_page', race_id=race['id']) }}">
+                                                {{ race['race_name'] }}
+                                            </a>
+                                            {% if race['race_grade'] %}
+                                                <img 
+                                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/race/grade/{{ race['race_grade'] }}.jpeg" alt="{{ race['race_grade'] }}" 
+                                                    style="width: 20px; height: auto;" 
+                                                    onerror="this.style.display='none';">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>予定はありません</p>
+                {% endif %}
+            </div>
+        </div>
+        <h1 class="sub-title">月間得点王</h1>
+        <div class="point-top3">
+            <div class="first-block">
+                {% if users|length >= 1 %}
+                    <div class="top3-conteiner">
+                        <div class="first-rank">
+                            <div class="rank-conteiner">
+                                <img 
+                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/1st.png" 
+                                    style="width: auto; height: 120px;" 
+                                    class="first-title" 
+                                    alt="rank" 
+                                    onerror="this.style.display='none';"> 
+                                <div class="first-score">{{ users[0].total_score }} pt</div>
+                            </div>
+                            <div class="first-name">{{ users[0].username }}</div>
+                        </div>
+                        {% if users[0].user_id %}
+                            <img 
+                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{{ users[0].user_id }}/1st-icon.png" 
+                                style="width: auto; height: 250px;" 
+                                class="first-photo" 
+                                alt="face-photo" 
+                                onerror="this.style.display='none';"> 
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="other">
+                {% if users|length >= 2 %}
+                    <div class="top3-conteiner">
+                        <div class="second-rank">
+                            <div class="rank-conteiner">
+                                <img 
+                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/2nd.png" 
+                                    class="second-title" 
+                                    alt="rank" 
+                                    onerror="this.style.display='none';"> 
+                                <div class="second-score">{{ users[1].total_score }} pt</div>
+                            </div>
+                            <div class="second-name">{{ users[1].username }}</div>
+                        </div>
+                        {% if users[1].user_id %}
+                            <img 
+                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{{ users[1].user_id }}/2-3th-icon.png" 
+                                style="width: auto; height: 120px;" 
+                                class="second-photo" 
+                                alt="face-photo" 
+                                onerror="this.style.display='none';"> 
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if users|length >= 3 %}
+                    <div class="top3-conteiner">
+                        <div class="third-rank">
+                            <div class="rank-conteiner">
+                                <img 
+                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/3rd.png" 
+                                    class="third-title" 
+                                    alt="rank" 
+                                    onerror="this.style.display='none';"> 
+                                <div class="third-score">{{ users[2].total_score }} pt</div>
+                            </div>
+                            <div class="third-name">{{ users[2].username }}</div>
+                        </div>
+                        {% if users[2].user_id %}
+                            <img 
+                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{{ users[2].user_id }}/2-3th-icon.png" 
+                                style="width: auto; height: 120px;" 
+                                class="third-photo" 
+                                alt="face-photo" 
+                                onerror="this.style.display='none';"> 
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <h1 class="sub-title">総合得点王</h1>
+        <div class="point-top3">
+            <div class="first-block">
+                {% if users_total|length >= 1 %}
+                    <div class="top3-conteiner">
+                        <div class="first-rank">
+                            <div class="rank-conteiner">
+                                <img 
+                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/1st.png" 
+                                    style="width: auto; height: 120px;" 
+                                    class="first-title" 
+                                    alt="rank" 
+                                    onerror="this.style.display='none';"> 
+                                <div class="first-score">{{ users_total[0].total_score }} pt</div>
+                            </div>
+                            <div class="first-name">{{ users_total[0].username }}</div>
+                        </div>
+                        {% if users_total[0].user_id %}
+                            <img 
+                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{{ users_total[0].user_id }}/1st-icon.png" 
+                                style="width: auto; height: 250px;" 
+                                class="first-photo" 
+                                alt="face-photo" 
+                                onerror="this.style.display='none';"> 
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="other">
+                {% if users_total|length >= 2 %}
+                    <div class="top3-conteiner">
+                        <div class="second-rank">
+                            <div class="rank-conteiner">
+                                <img 
+                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/2nd.png" 
+                                    class="second-title" 
+                                    alt="rank" 
+                                    onerror="this.style.display='none';"> 
+                                <div class="second-score">{{ users_total[1].total_score }} pt</div>
+                            </div>
+                            <div class="second-name">{{ users_total[1].username }}</div>
+                        </div>
+                        {% if users_total[1].user_id %}
+                            <img 
+                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{{ users_total[1].user_id }}/2-3th-icon.png" 
+                                style="width: auto; height: 120px;" 
+                                class="second-photo" 
+                                alt="face-photo" 
+                                onerror="this.style.display='none';"> 
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if users_total|length >= 3 %}
+                    <div class="top3-conteiner">
+                        <div class="third-rank">
+                            <div class="rank-conteiner">
+                                <img 
+                                    src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/3rd.png" 
+                                    class="third-title" 
+                                    alt="rank" 
+                                    onerror="this.style.display='none';"> 
+                                <div class="third-score">{{ users_total[2].total_score }} pt</div>
+                            </div>
+                            <div class="third-name">{{ users_total[2].username }}</div>
+                        </div>
+                        {% if users_total[2].user_id %}
+                            <img 
+                                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{{ users_total[2].user_id }}/2-3th-icon.png" 
+                                style="width: auto; height: 120px;" 
+                                class="third-photo" 
+                                alt="face-photo" 
+                                onerror="this.style.display='none';"> 
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+    <script src="{{ url_for('static', filename='js/this_week_race.js') }}"></script>
+</html>
