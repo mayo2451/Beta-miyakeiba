@@ -1,0 +1,14 @@
+<div class="menu_bar">
+    <nav>
+        <ul class="menu">
+            <li><a href="/">HOME</a></li>
+            <li><a href="{{ url_for('schedule') }}">レース</a></li>
+            <li><a href="{{ url_for('allusers') }}">全体成績</a></li>
+            <li><a href="{{ url_for('mypage') }}">マイページ</a></li>
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <li><a href="{{ url_for('insert_race') }}">予定追加</a></li>
+                <li><a href="{{ url_for('entry_form') }}">出馬表作成</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

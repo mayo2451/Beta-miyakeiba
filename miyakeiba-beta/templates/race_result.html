@@ -1,0 +1,106 @@
+<h2>レース結果</h2>
+<div class="result-table-container">
+    <table border="1" style="padding: 0 auto auto 0;">
+        <tr>
+            <th class="tiny">着順</th>
+            <th class="horse-name">馬名</th>
+            <th class="odds">オッズ</th>
+            <th class="point">得点</th>
+            <th>みんなの予想</th>
+        </tr>
+        <tr>
+            <td>1着</td>
+            <td class="horse-name">{{ result.first_place }}</td>
+            <td class="odds">{{ result.odds_first }}</td>
+            <td></td>
+            <td>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    {% for voter in result.voted_by_first %}
+                        <img src="{{ voter.image_url }}" class="face" alt="{{ voter.username }}" onerror="this.style.display='none';">
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>2着</td>
+            <td class="horse-name">{{ result.second_place }}</td>
+            <td class="odds">{{ result.odds_second }}</td>
+            <td></td>
+            <td>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    {% for voter in result.voted_by_second %}
+                        <img src="{{ voter.image_url }}" class="face" alt="{{ voter.username }}" onerror="this.style.display='none';">
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>3着</td>
+            <td class="horse-name">{{ result.third_place }}</td>
+            <td class="odds">{{ result.odds_third }}</td>
+            <td></td>
+            <td>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    {% for voter in result.voted_by_third %}
+                        <img src="{{ voter.image_url }}" class="face" alt="{{ voter.username }}" onerror="this.style.display='none';">
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>4着</td>
+            <td class="horse-name">{{ result.fourth_place }}</td>
+            <td>—</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>5着</td>
+            <td class="horse-name">{{ result.fifth_place }}</td>
+            <td>—</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
+<h2>本命馬提出と得点一覧</h2>
+<table border="1">
+    <tr>
+        <th>順位</th>
+        <th>ユーザー</th>
+        <th>本命馬</th>
+        <th>得点</th>
+    </tr>
+    {% for row in scores %}
+    <tr>
+        <td>{{ row.rank }}</td>
+        <td>{{ row.username }}</td>
+        <td>{{ row.honmeiba }}</td>
+        <td>{{ row.score }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p><a href="{{ url_for('show_race_page', race_id=request.view_args['race_id']) }}">出馬表へ戻る</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

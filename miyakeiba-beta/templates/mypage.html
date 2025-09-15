@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>マイページ</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='mypagestyle.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>大ヴァロ予想王</h1>
+            {% include 'login_stats.html' %}
+        </header>
+        {% include 'menubar.html' %}
+        <h2 class="username">{{ session['username'] }}</h2>
+        <h2>総合成績</h2>
+        {% if user %}
+            <table border="1" cellpadding="8">
+              <tr>
+                <th class="short">出走数</th>
+                <th class="short">合計</th>
+                <th class="short">1着</th>
+                <th class="short">2着</th>
+                <th class="short">3着</th>
+                <th class="short">掲示板</th>
+                <th class="short">着外</th>
+                <th class="middle">勝率</th>
+                <th class="middle">複勝率</th>
+              </tr>
+              <tr>
+                <td>{{ user.total_races }}</td>
+                <td>{{ user.total_score }}</td>
+                <td>{{ user.first }}</td>
+                <td>{{ user.second }}</td>
+                <td>{{ user.third }}</td>
+                <td>{{ user.bbs }}</td>
+                <td>{{ user.out_of_place }}</td>
+                <td>{{ (user.win_rate * 100) | round(2) }}%</td>
+                <td>{{ (user.placing_bets_rate * 100) | round(2) }}%</td>
+              </tr>
+            </table>
+        {% else %}
+            <p>成績データがありません。</p>
+        {% endif %}
+        <h2>出走履歴</h2>
+        {% if entries %}
+            <table border="1">
+                <tr>
+                    <th class="short">日付</th>
+                    <th class="tiny">開催</th>
+                    <th>レース名</th>
+                    <th class="middle">本命馬</th>
+                    <th class="tiny">着順</th>
+                    <th class="tiny">得点</th>
+                </tr>
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry[0] }}</td>
+                        <td>{{ entry[1] }}</td>
+                        <td class="left">{{ entry[2] }}</td>
+                        <td class="left">{{ entry[3] }}</td>
+                        <td>
+                            {% if entry[4] == 0 %}
+                                着外
+                            {% else %}
+                                {{ entry[4] }} 着
+                            {% endif %}
+                        </td>
+                        <td>{{ entry[5] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>まだ本命馬を提出していません。</p>
+        {% endif %}
+    </body>
+</html>
+
+
+

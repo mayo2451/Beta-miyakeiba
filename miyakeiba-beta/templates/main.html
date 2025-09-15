@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% from 'macros/table_macros.html' import score_table %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大ヴァロ予想王</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='alluserscore.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>大ヴァロ予想王</h1>
+            <div class="login-status">
+                {% if session.get('username') %}
+                    <span>ようこそ、{{ session['username'] }}さん</span>
+                    <a href="{{ url_for('logout') }}" style="margin-left: 10px;">ログアウト</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">ログイン</a>
+                    <a href="{{ url_for('register') }}" style="margin-left: 10px;">新規登録</a>
+                {% endif %}
+            </div>
+        </header>
+        <div class="menu_bar">
+            <nav>
+                <ul class="menu">
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="{{url_for('allusers')}}">全体成績</a></li>
+                    <li><a href="{{url_for('mypage')}}">マイページ</a></li>
+                    {% if session.get('role') == 'admin' %}
+                        <li><a href="{{url_for('insert_race')}}">予定追加</a></li>
+                        <li><a href="{{url_for('entry_form')}}">出馬表作成</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <iframe
+          width="640"
+          height="360"
+          src="https://www.youtube.com/embed/RvSBYgNaSxU?autoplay=1&mute=1&loop=1&playlist=RvSBYgNaSxU"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+        <div class="container">
+            <div class="calendar">
+                <div class="calendar-nav">
+                    <a href="/?year={{ prev_year }}&month={{ prev_month }}">◀ 前月</a>
+                    <a href="/">今月</a>
+                    <a href="/?year={{ next_year }}&month={{ next_month }}">次月 ▶</a>
+                </div>
+                {{ calendar_html|safe }}
+            </div>
+            <div class="event-list">
+                <h2>{{ year }}年{{ month }}月のレース予定</h2>
+                {% if events %}
+                <table class="schedule_table">
+                    <tbody>
+                        {% for day, races in events.items() %}
+                            {% for race in races %}
+                                <tr>
+                                    <td class="schedule_date">{{ race['race_date_display'] }}</td>
+                                    <td class="schedule_place">{{ race['race_place'] }}</td>
+                                    <td class="schedule_name">
+                                        <a href="{{ url_for('show_entries', race_id=race['id']) }}">
+                                            {{ race['race_name'] }}
+                                        </a>
+                                    </td>
+                                    <td class="schedule_time">{{ race['start_time'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p>予定はありません</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="score-list">
+            <h2>{{ year }}年{{ month }}月の成績</h2>
+            {% if events %}
+                {{ score_table(users, 'monthly_score') }}
+            {% else %}
+                <p>実施されたレースはありません</p>
+            {% endif %}
+        </div>
+    <script src="{{ url_for('static', filename='js/alluserscore.js') }}"></script>
+    </body>
+</html>

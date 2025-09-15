@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大ヴァロ予想王</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='resulttable.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='entryhorsetable.css') }}">
+    </head>
+    <body>
+        <h2>大ヴァロ予想王</h2>
+        {% include 'menubar.html' %}
+        <div class="tabs-container">
+            <div class="button-container">
+                <a href="{{ url_for('show_race_page', race_id=race_id, view='entries') }}"class="btn {% if view == 'entries' %}btn-primary{% else %}btn-outline-primary{% endif %}me-2">
+                    出馬表
+                </a>
+                <a href="{{ url_for('show_race_page', race_id=race_id, view='result') }}"class="btn {% if view == 'result' %}btn-primary{% else %}btn-outline-primary{% endif %}me-2">
+                    レース結果
+                </a>
+                <a href="{{ url_for('show_race_page', race_id=race_id, view='video') }}"class="btn {% if view == 'video' %}btn-primary{% else %}btn-outline-primary{% endif %}me-2">
+                    映像
+                </a>
+            </div>
+            <div class="tab-content-container">
+                {% if view == 'entries' %}
+                    {% include 'entries.html' %}
+                {% elif view == 'result' %}
+                    {% include 'race_result.html' %}
+                {% elif view == 'video' %}
+                    {% include 'race_video.html' %}
+                {% endif %}
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const buttons = document.querySelectorAll('.toggle-button');
+                const contents = document.querySelectorAll('.tab-content');
+            
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetId = button.getAttribute('data-target');
+            
+                        // すべてのボタンからactiveクラスを削除
+                        buttons.forEach(item => item.classList.remove('active'));
+                        // クリックされたボタンにactiveクラスを追加
+                        button.classList.add('active');
+            
+                        // すべてのコンテンツを非表示にする
+                        contents.forEach(content => content.classList.remove('active'));
+            
+                        // 選択されたコンテンツを表示する
+                        document.getElementById(targetId).classList.add('active');
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
