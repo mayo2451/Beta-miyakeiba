@@ -1053,6 +1053,17 @@ def get_video_url(race_id):
         logging.error(f"Google Sheetsへのアクセス中にエラーが発生しました: {e}")
         return None
 
+def extract_youtube_id(url):
+    """
+    YouTube URLから動画IDを抽出します。
+    watch?v=xxx や youtu.be/xxx の両方に対応します。
+    """
+    youtube_regex = re.compile(
+        r'(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})'
+    )
+    match = youtube_regex.search(url)
+    return match.group(1) if match else None
+
 @app.route('/race/<int:race_id>', methods=['GET', 'POST'])
 def show_race_page(race_id):
     conn = connect_db()
@@ -1394,6 +1405,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
