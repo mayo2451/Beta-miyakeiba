@@ -121,15 +121,6 @@ def update_backup_time():
         worksheet.update_acell('A1', now)
     except Exception as e:
         print(f"⚠️ タイムスタンプ更新エラー: {e}")
-            
-def startup_backup_check():
-    if SKIP_STARTUP_BACKUP:
-        print("🚫 起動時のバックアップはスキップされました。")
-        return
-    if time.time() - get_last_backup_time() >= BACKUP_INTERVAL:
-        run_backup_async()
-
-startup_backup_check()
 
 # バックアップ中かどうかのフラグ（グローバル）
 is_backup_running = False
@@ -179,7 +170,16 @@ def backup_all_tables():
 def run_backup_async():
     thread = threading.Thread(target=backup_all_tables)
     thread.start()
-    
+                
+def startup_backup_check():
+    if SKIP_STARTUP_BACKUP:
+        print("🚫 起動時のバックアップはスキップされました。")
+        return
+    if time.time() - get_last_backup_time() >= BACKUP_INTERVAL:
+        run_backup_async()
+
+startup_backup_check()
+
 def backup_on_post(force=False):
     if force or (time.time() - get_last_backup_time() >= BACKUP_INTERVAL):
         run_backup_async()
@@ -1340,6 +1340,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
