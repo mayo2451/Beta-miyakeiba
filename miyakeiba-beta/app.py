@@ -122,10 +122,6 @@ def update_backup_time():
     except Exception as e:
         print(f"⚠️ タイムスタンプ更新エラー: {e}")
             
-def run_backup_async():
-    thread = threading.Thread(target=backup_all_tables)
-    thread.start()
-    
 def startup_backup_check():
     if SKIP_STARTUP_BACKUP:
         print("🚫 起動時のバックアップはスキップされました。")
@@ -180,6 +176,10 @@ def backup_all_tables():
         if conn:
             conn.close()
 
+def run_backup_async():
+    thread = threading.Thread(target=backup_all_tables)
+    thread.start()
+    
 def backup_on_post(force=False):
     if force or (time.time() - get_last_backup_time() >= BACKUP_INTERVAL):
         run_backup_async()
@@ -1340,6 +1340,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
