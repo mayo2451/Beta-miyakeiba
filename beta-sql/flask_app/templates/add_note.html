@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>メモを追加</title>
+</head>
+<body>
+    <h1>メモを追加</h1>
+    <form method="post">
+        <label>タイトル: <input type="text" name="title" required></label><br>
+        <label>内容: <textarea name="content" required></textarea></label><br>
+        <button type="submit">追加</button>
+    </form>
+    <a href="{{ url_for('index') }}">← 戻る</a>
+</body>
+</html>
