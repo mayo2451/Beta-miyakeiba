@@ -1,0 +1,40 @@
+{% macro score_table(users, table_id) %}
+<table class="score-table">
+    <thead>
+        <tr>
+            <th scope="col" class="tiny">順位</th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',1)">ユーザー名 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',2)" class="short">得点 <span class="sort-indicator">▼</span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',3)" class="short">1着 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',4)" class="short">2着 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',5)" class="short">3着 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',6)" class="short">掲示板 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',7)" class="short">着外 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',8)" class="middle">勝率 <span class="sort-indicator"></span></th>
+            <th scope="col" onclick="handleSort('{{ table_id }}',9)" class="middle">複勝率 <span class="sort-indicator"></span></th>
+        </tr>
+    </thead>
+    <tbody id="{{ table_id }}">
+        {% set prev_score = None %}
+        {% set rank = 0 %}
+        {% for user in users %}
+            {% if prev_score != user.score %}
+                {% set rank = loop.index %}
+            {% endif %}
+                <tr>
+                    <td>{{ rank }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.total_score or 0 }}</td>
+                    <td>{{ user.first }}</td>
+                    <td>{{ user.second }}</td>
+                    <td>{{ user.third }}</td>
+                    <td>{{ user.bbs }}</td>
+                    <td>{{ user.out_of_place }}</td>
+                    <td class="rate">{{ '%.2f%%' | format(user.win_rate * 100 if user.win_rate else 0) }}</td>
+                    <td class="rate">{{ '%.2f%%' | format(user.placing_bets_rate * 100 if user.placing_bets_rate else 0) }}</td>
+                </tr>
+            {% set prev_score = user.score %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}
