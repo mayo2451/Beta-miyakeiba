@@ -12,7 +12,7 @@
             <td>1着</td>
             <td class="horse-name">{{ result.first_place }}</td>
             <td class="odds">{{ result.odds_first }}</td>
-            <td></td>
+            <td>{{ first_place_score }}</td>
             <td>
                 <div style="display: flex; gap: 5px; align-items: center;">
                     {% for voter in result.voted_by_first %}
@@ -25,7 +25,7 @@
             <td>2着</td>
             <td class="horse-name">{{ result.second_place }}</td>
             <td class="odds">{{ result.odds_second }}</td>
-            <td></td>
+            <td>{{ second_place_score }}</td>
             <td>
                 <div style="display: flex; gap: 5px; align-items: center;">
                     {% for voter in result.voted_by_second %}
@@ -38,7 +38,7 @@
             <td>3着</td>
             <td class="horse-name">{{ result.third_place }}</td>
             <td class="odds">{{ result.odds_third }}</td>
-            <td></td>
+            <td>{{ third_place_score }}</td>
             <td>
                 <div style="display: flex; gap: 5px; align-items: center;">
                     {% for voter in result.voted_by_third %}
@@ -81,26 +81,3 @@
     </tr>
     {% endfor %}
 </table>
-
-<p><a href="{{ url_for('show_race_page', race_id=request.view_args['race_id']) }}">出馬表へ戻る</a></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
