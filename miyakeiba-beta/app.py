@@ -1132,6 +1132,51 @@ def show_race_page(race_id):
         'first_place': '', 'second_place': '', 'third_place': '', 'fourth_place': '', 'fifth_place': '',
         'odds_first': '', 'odds_second': '', 'odds_third': ''
     }
+    first_place_score = 0
+    second_place_score = 0
+    third_place_score = 0
+    if result.get('first_place') and result.get('odds_first'):
+        try:
+            first_place_score = round(float(result['odds_first']) * 10)
+        except (ValueError, TypeError):
+            logging.error(f"オッズ(1着)の形式が不正です: {result['odds_first']}")
+            first_place_score = 0
+    if result.get('second_place') and result.get('odds_second'):
+        try:
+            second_place_score = round(float(result['odds_second']) * 3)
+        except (ValueError, TypeError):
+            logging.error(f"オッズ(2着)の形式が不正です: {result['odds_second']}")
+            second_place_score = 0
+    if result.get('third_place') and result.get('odds_third'):
+        try:
+            third_place_score = round(float(result['odds_third']) * 1)
+        except (ValueError, TypeError):
+            logging.error(f"オッズ(3着)の形式が不正です: {result['odds_third']}")
+            third_place_score = 0
+            
+    if is_finalized and result.get('first_place'):
+        cur.execute("SELECT username, honmeiba FROM raise_horse WHERE race_id = ?", (race_id,))
+        user_predictions = cur.fetchall()
+
+        for prediction in user_predictions:
+            username = prediction['username']
+            predicted_horse = prediction['honmeiba']
+            score = 0
+
+            if predicted_horse == result['first_place']:
+                score = first_place_score
+            elif predicted_horse == result['second_place']:
+                score = second_place_score
+            elif predicted_horse == result['third_place']:
+                score = third_place_score
+
+            cur.execute("""
+                UPDATE raise_horse
+                SET score = ?
+                WHERE race_id = ? AND username = ?
+            """, (score, race_id, username))
+        conn.commit()
+
     cur.execute("SELECT race_name FROM race_schedule WHERE id = ?", (race_id,))
     race_info = cur.fetchone()
     cur.execute("""SELECT username, honmeiba, score FROM raise_horse WHERE race_id = ?""", (race_id,))
@@ -1148,7 +1193,7 @@ def show_race_page(race_id):
         ranked_scores.append({
             'rank': rank,
             'username': row['username'],
-            'honemiba': row['honmeiba'],
+            'honmeiba': row['honmeiba'],
             'score' : row['score']
         })
         prev_score = row['score']
@@ -1177,7 +1222,13 @@ def show_race_page(race_id):
     if result.get('third_place'):
         result['voted_by_third'] = vote_map_result.get(result['third_place'], [])
 
-    video_url = get_video_url(race_id)
+    #video_url = get_video_url(race_id)
+    video_url = "https://www.youtube.com/watch?v=R9R63qB3j8k" # ★テスト用★
+    logging.info(f"取得した動画URL: {video_url}")  # ★追加★
+    video_id = None
+    if video_url:
+        video_id = extract_youtube_id(video_url)
+    logging.info(f"抽出した動画ID: {video_id}")  # ★追加★
 
     conn.close()
 
@@ -1192,8 +1243,11 @@ def show_race_page(race_id):
                            is_finalized=is_finalized,
                            horse=horse,
                            result=result,
+                           first_place_score=first_place_score,
+                           second_place_score=second_place_score,
+                           third_place_score=third_place_score,
                            scores=ranked_scores,
-                           video_url=video_url,
+                           video_id=video_id,
                            view=view_mode
                           )
 
@@ -1340,6 +1394,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
