@@ -155,7 +155,7 @@ a {
     background: #cd7f32; /* 銅色 */
 }
 .first-score {
-    font-size: 4.5rem;
+    font-size: 4rem;
     margin-bottom: 5px;
     text-align: right;
     margin-top: 30px;
@@ -201,6 +201,7 @@ a {
 .first-block {
     width: 60%;
 }
+
 
 
 
