@@ -1,7 +1,8 @@
 .entry_table table {
+    border-collapse: collapse;
     width: 100%;
 }
-td {
+.entry_table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
@@ -11,7 +12,7 @@ td {
 .tiny {
     width: 3%
 }
-th {
+.entry_table th {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
