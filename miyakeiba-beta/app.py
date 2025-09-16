@@ -1075,7 +1075,7 @@ def show_race_page(race_id):
     entries = []
 
     cursor = conn.cursor()
-    cursor.execute("SELECT id, race_date, race_place, race_name, start_time FROM race_schedule WHERE id = ?", (race_id,))
+    cursor.execute("SELECT id, race_date, race_place, race_grade, race_name, start_time, race_ground, race_distance FROM race_schedule WHERE id = ?", (race_id,))
     race = cursor.fetchone()
     if not race:
         conn.close()
@@ -1409,6 +1409,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
