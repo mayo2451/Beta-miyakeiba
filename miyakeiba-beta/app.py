@@ -316,10 +316,10 @@ def get_this_week_races():
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT id, race_date, race_name, race_place, race_ground, race_distance, race_grade
+        SELECT id, race_date, race_name, race_place, race_ground, race_distance, race_grade, start_time
         FROM race_schedule
         WHERE race_date BETWEEN ? AND ?
-        ORDER BY race_date, start_time
+        ORDER BY race_date ASC, start_time ASC
     """,(start_of_week.isoformat(), end_of_week.isoformat()))
     rows = cursor.fetchall()
     conn.close()
@@ -1407,6 +1407,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
