@@ -2,23 +2,20 @@
     border-collapse: collapse;
     width: 100%;
 }
-.entry_table td {
+
+.entry_table td, .entry_table th {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
-    height: 30px;
     color: black;
 }
 .tiny {
     width: 3%
 }
 .entry_table th {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
     background-color: #f0f0f0;
 }
-.entry_table.horse-name {
+.entry_table .horse-name {
     width: 30%;
     text-align: left;
 }
