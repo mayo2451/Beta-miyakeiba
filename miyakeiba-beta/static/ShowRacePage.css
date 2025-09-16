@@ -42,3 +42,10 @@
     font-weight: bold;
     /* 文字を太くする */
 }
+.tab-content {
+    display: none; /* デフォルトではすべて非表示 */
+}
+
+.tab-content.active {
+    display: block; /* activeクラスがついたものだけ表示 */
+}
