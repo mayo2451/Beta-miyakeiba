@@ -7,45 +7,26 @@
     /* 下の線はつけない */
     width: 100%;
 }
-/* ボタンの基本スタイル */
-.btn {
-    flex-grow: 1;
-    /* ボタンの幅を均等に広げる */
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    /* リンクの下線をなくす */
-    color: #000;
-    /* 文字の色 */
-    background-color: #fff;
-    border-right: 1px solid #ccc;
-    /* ボタン間の区切り線 */
-    border-top: none;
-    /* 上の線はつけない */
-    border-left: none;
-    /* 左の線はつけない */
-    /* マウスカーソルを合わせたときのスタイル */
-    cursor: pointer;
+/* btn-primary (アクティブなボタン) */
+.btn-primary {
+    background-color: #0d6efd; /* 青い背景色 */
+    color: #fff;              /* 白い文字色 */
+    font-weight: bold;         /* 文字を太くする */
+    border-color: #0d6efd;     /* 枠線の色 */
 }
-
+/* btn-outline-primary (非アクティブなボタン) */
+.btn-outline-primary {
+    background-color: transparent; /* 背景を透明に */
+    color: #000;                   /* 文字の色 */
+    border-color: #ccc;            /* 枠線の色 */
+}
 .btn:first-child {
     border-left: none;
     /* 最初のボタンの左側の線は消す */
 }
-
-/* アクティブなタブのスタイル */
-.btn.active {
-    background-color: #0d6efd;
-    /* 青い背景色 */
-    color: #fff;
-    /* 白い文字色 */
-    font-weight: bold;
-    /* 文字を太くする */
-}
 .tab-content {
     display: none; /* デフォルトではすべて非表示 */
 }
-
 .tab-content.active {
     display: block; /* activeクラスがついたものだけ表示 */
 }
