@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>β大ヴァロ予想王</title>
+        <title>大ヴァロ予想王</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='ThisWeekRace.css') }}">
     </head>
@@ -80,9 +80,8 @@
                 <h2>今月のレース</h2>
                 {% if events %}
                     <div class="race-schedule">
-                        {% for day, races in events.items() %}
+                        {% for day, races in events|groupby('race_date_display') %}
                             <div class="race-block" style="margin-bottom: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
-                                <!-- 日付（MM/DD（曜日）形式） -->
                                 <div class="race-date" style="font-weight: bold; margin-bottom: 0.5rem;">
                                     {{ day }}
                                 </div>
