@@ -17,7 +17,7 @@
 
 /* ★このスタイルを追加★ */
 /* 親のcontainerクラスにflexboxを適用し、コンテンツを中央に配置する */
-.container {
+.video-page-container {
     width: 70%;
     max-width: 800px;
     margin: 0 auto;
