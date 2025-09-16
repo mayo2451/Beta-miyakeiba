@@ -275,7 +275,7 @@ def get_events_for_month(year, month):
     query = """
         SELECT id, race_date, race_place, race_ground, race_distance, race_number, race_grade, race_name, start_time
         FROM race_schedule
-        WHERE DATE(race_date) >= ? AND DATE(race_date) < ?
+        WHERE race_date BETWEEN ? AND ?
         ORDER BY race_date ASC, start_time ASC
     """
 
@@ -292,13 +292,14 @@ def get_events_for_month(year, month):
         weekday_jpn = JAPANESE_WEEKDAYS[date_obj.weekday()]
         display_date = date_obj.strftime(f"%m/%d({weekday_jpn})")
 
-        #if display_date not in events:
-        #    events[display_date] = []
+        # この行は不要なので削除
+        # if display_date not in events:
+        #     events = []
 
-        events[display_date].append({
+        events.append({
             'id': row['id'],
-            'race_date': row['race_date'],               # 元のYYYY-MM-DD
-            'race_date_display': display_date,           # 表示用：MM/DD
+            'race_date': row['race_date'],
+            'race_date_display': display_date,
             'race_place': row['race_place'],
             'race_ground': row['race_ground'],
             'race_distance': row['race_distance'],
@@ -1408,6 +1409,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
