@@ -1,3 +1,22 @@
+.btn {
+    flex-grow: 1;
+    /* ボタンの幅を均等に広げる */
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    /* リンクの下線をなくす */
+    color: #000;
+    /* 文字の色 */
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    /* ボタン間の区切り線 */
+    border-top: none;
+    /* 上の線はつけない */
+    border-left: none;
+    /* 左の線はつけない */
+    /* マウスカーソルを合わせたときのスタイル */
+    cursor: pointer;
+}
 .button-container {
     display: flex;
     /* ボタンを横並びに配置 */
