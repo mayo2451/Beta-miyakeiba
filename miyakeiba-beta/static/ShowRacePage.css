@@ -1,37 +1,44 @@
+.button-container {
+    display: flex;
+    /* ボタンを横並びに配置 */
+    border: 1px solid #ccc;
+    /* コンテナの枠線を追加 */
+    border-bottom: none;
+    /* 下の線はつけない */
+    width: 100%;
+}
 /* ボタンの基本スタイル */
 .btn {
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
+    flex-grow: 1;
+    /* ボタンの幅を均等に広げる */
+    padding: 10px 20px;
     text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
+    text-decoration: none;
+    /* リンクの下線をなくす */
+    color: #000;
+    /* 文字の色 */
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    /* ボタン間の区切り線 */
+    border-top: none;
+    /* 上の線はつけない */
+    border-left: none;
+    /* 左の線はつけない */
+    /* マウスカーソルを合わせたときのスタイル */
     cursor: pointer;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    text-decoration: none; /* 下線をなくす */
 }
 
-/* プライマリボタンの色 */
-.btn-primary {
-    color: #3232FF;
+.btn:first-child {
+    border-left: none;
+    /* 最初のボタンの左側の線は消す */
+}
+
+/* アクティブなタブのスタイル */
+.btn.active {
     background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-
-/* アウトラインボタンの色 */
-.btn-outline-primary {
-    color: #0d6efd;
-    background-color: transparent;
-    border-color: #0d6efd;
-}
-
-/* ボタンにカーソルを合わせた時のスタイル */
-.btn:hover {
-    opacity: 0.8;
+    /* 青い背景色 */
+    color: #fff;
+    /* 白い文字色 */
+    font-weight: bold;
+    /* 文字を太くする */
 }
