@@ -1,6 +1,5 @@
-table {
-    border-collapse: collapse;
-    width: 70%;
+.entry_table table {
+    width: 100%;
 }
 td {
     border: 1px solid #ccc;
@@ -25,6 +24,7 @@ th {
 .entry_table {
     display: flex;
     justify-content: center;
+    width: 70%;
 }
 .face {
     width: auto; 
