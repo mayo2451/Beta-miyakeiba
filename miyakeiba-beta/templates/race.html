@@ -12,17 +12,23 @@
     <body>
         <h2>大ヴァロ予想王</h2>
         {% include 'menubar.html' %}
-        <h2>{{ race['race_name'] }}</h2>
-        <img 
-            src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/race/grade/{{ race['race_grade'] }}.jpeg" 
-            style="width: 20px; height: auto;" 
-            class="race-grade" 
-            alt="grade" 
-            onerror="this.style.display='none';">
-        <h2>{{ race['race_date'] }}</h2>
-        <h2>{{ race['race_place'] }}</h2>
-        <h2>{{ race['race_ground'] }}</h2>
-        <h2>{{ race['race_distance'] }}</h2>
+        <div class="race_info">
+            <h2>{{ race['race_name'] }}</h2>
+            <img 
+                src="https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/race/grade/{{ race['race_grade'] }}.jpeg" 
+                style="width: 20px; height: auto;" 
+                class="race-grade" 
+                alt="grade" 
+                onerror="this.style.display='none';">
+            <h2>{{ race['race_date'] }}</h2>
+            <div class="race_info_pgd">
+                <h2>{{ race['race_place'] }}</h2>
+                <div class="race_info_gd">
+                    <h2>{{ race['race_ground'] }}</h2>
+                    <h2>{{ race['race_distance'] }}</h2>
+                </div>    
+            </div>
+        </div>
         <div class="tabs-container">
             <div class="button-container">
                 <a href="#"class="btn btn-primary me-2" data-view="entries">出馬表</a>
