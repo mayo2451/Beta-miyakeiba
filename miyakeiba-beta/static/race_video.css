@@ -11,13 +11,16 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100% !important;
-    height: 100% !important;
+    width: 100%;
+    height: 100%;
 }
 
 /* ★このスタイルを追加★ */
 /* 親のcontainerクラスにflexboxを適用し、コンテンツを中央に配置する */
 .container {
+    width: 70%;
+    max-width: 800px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center; /* 子要素を水平方向に中央揃え */
