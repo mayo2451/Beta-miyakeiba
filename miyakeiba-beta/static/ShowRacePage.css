@@ -42,3 +42,9 @@
 .tab-content.active {
     display: block; /* activeクラスがついたものだけ表示 */
 }
+.race_info {
+    display: flex;
+}
+.race_info_gd {
+    display: flex;
+}
