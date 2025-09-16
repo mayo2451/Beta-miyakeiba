@@ -15,44 +15,41 @@
         <h2>{{ race['race_name'] }}</h2>
         <div class="tabs-container">
             <div class="button-container">
-                <a href="{{ url_for('show_race_page', race_id=race_id, view='entries') }}"class="btn active">
-                    出馬表
-                </a>
-                <a href="{{ url_for('show_race_page', race_id=race_id, view='result') }}"class="btn">
-                    レース結果
-                </a>
-                <a href="{{ url_for('show_race_page', race_id=race_id, view='video') }}"class="btn">
-                    映像
-                </a>
+                <a href="#"class="btn btn-primary me-2" data-view="entries">出馬表</a>
+                <a href="#"class="btn btn-primary me-2" data-view="result">レース結果</a>
+                <a href="#"class="btn btn-primary me-2" data-view="video">映像</a>
             </div>
             <div class="tab-content-container">
-                {% if view == 'entries' %}
+                <div id="entries-content" class="tab-content active">
                     {% include 'entries.html' %}
-                {% elif view == 'result' %}
+                </div>
+                <div id="result-content" class="tab-content">
                     {% include 'race_result.html' %}
-                {% elif view == 'video' %}
+                </div>
+                <div id="video-content" class="tab-content">
                     {% include 'race_video.html' %}
-                {% endif %}
+                </div>
             </div>
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const buttons = document.querySelectorAll('.toggle-button');
-                const contents = document.querySelectorAll('.tab-content');
+                const buttons = document.querySelectorAll('.btn'); // すべてのボタンを取得
+                const contents = document.querySelectorAll('.tab-content'); // すべてのコンテンツを取得
             
                 buttons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        const targetId = button.getAttribute('data-target');
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault(); // ページ遷移を防止
             
-                        // すべてのボタンからactiveクラスを削除
-                        buttons.forEach(item => item.classList.remove('active'));
-                        // クリックされたボタンにactiveクラスを追加
-                        button.classList.add('active');
+                        const targetId = button.getAttribute('data-view') + '-content';
             
-                        // すべてのコンテンツを非表示にする
+                        // ボタンのactive状態を切り替え
+                        buttons.forEach(item => item.classList.remove('btn-primary'));
+                        buttons.forEach(item => item.classList.add('btn-outline-primary'));
+                        button.classList.remove('btn-outline-primary');
+                        button.classList.add('btn-primary');
+            
+                        // コンテンツの表示・非表示を切り替え
                         contents.forEach(content => content.classList.remove('active'));
-            
-                        // 選択されたコンテンツを表示する
                         document.getElementById(targetId).classList.add('active');
                     });
                 });
