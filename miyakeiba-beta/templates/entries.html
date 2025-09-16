@@ -1,4 +1,3 @@
-<h2>{{ race['race_name'] }}の出馬表</h2>
 {% if is_closed %}
     <p>このレースの投票は締め切られました。</p>
 {% endif %}
@@ -54,6 +53,7 @@
     </form>
 {% endif %}
 <script src="{{ url_for('static', filename='js/waku_color.js') }}"></script>
+
 
 
 
