@@ -1,0 +1,37 @@
+/* ボタンの基本スタイル */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none; /* 下線をなくす */
+}
+
+/* プライマリボタンの色 */
+.btn-primary {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* アウトラインボタンの色 */
+.btn-outline-primary {
+    color: #0d6efd;
+    background-color: transparent;
+    border-color: #0d6efd;
+}
+
+/* ボタンにカーソルを合わせた時のスタイル */
+.btn:hover {
+    opacity: 0.8;
+}
