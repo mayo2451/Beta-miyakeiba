@@ -23,10 +23,10 @@
 .result-table-container .odds.center {
     text-align: center;
 }
-table {
+/*table {
     border-collapse: collapse;
     width: 70%;
-}
+}*/
 td {
     border: 1px solid #ccc;
     padding: 8px;
