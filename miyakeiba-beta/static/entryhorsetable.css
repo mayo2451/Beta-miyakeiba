@@ -8,6 +8,8 @@
     padding: 8px;
     text-align: center;
     color: black;
+}
+.entry_table td {
     height: 30px;
 }
 .tiny {
