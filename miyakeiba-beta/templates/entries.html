@@ -5,7 +5,7 @@
     <form method="post">
         <input type="hidden" name="race_id" value="{{ selected_race_id }}">
         <div class="entry_table">
-            <table border="1" style="padding: 0 auto auto 0;">
+            <table border="1">
                 <tr>
                     {% if not is_closed %}
                         <th class="tiny">選択</th>
@@ -53,6 +53,7 @@
     </form>
 {% endif %}
 <script src="{{ url_for('static', filename='js/waku_color.js') }}"></script>
+
 
 
 
