@@ -49,6 +49,6 @@
 .race_info_gd {
     display: flex;
 }
-td {
+.entry_table td {
     height: 30px;
 }
