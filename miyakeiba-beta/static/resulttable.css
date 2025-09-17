@@ -16,6 +16,9 @@
     text-align: center;
     color: black;
 }
+.result-table-container td {
+    height: 30px;
+}
 .tiny {
     width: 10%
 }
