@@ -12,6 +12,8 @@
 .entry_table td {
     height: 30px;
     min-height: 30px;
+    line-height: 1; /* ★この行を追加★ */
+    white-space: nowrap; /* ★この行を追加★ */
 }
 .tiny {
     width: 3%
