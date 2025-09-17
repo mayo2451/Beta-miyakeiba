@@ -49,3 +49,6 @@
 .race_info_gd {
     display: flex;
 }
+td {
+    height: 30px;
+}
