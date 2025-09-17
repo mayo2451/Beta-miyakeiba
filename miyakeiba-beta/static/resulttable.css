@@ -18,6 +18,7 @@
 }
 .result-table-container td {
     height: 30px;
+    min-height: 30px;
 }
 .tiny {
     width: 10%
