@@ -1135,7 +1135,7 @@ def show_race_page(race_id):
             entry["voted_by"] = [
                 {
                     "username": "dummy",
-                    "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/透明.png"
+                    "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/dummy.png"
                 }
             ]
         else:
@@ -1431,6 +1431,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
