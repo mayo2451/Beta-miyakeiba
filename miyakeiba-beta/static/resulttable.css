@@ -7,6 +7,7 @@
 .result-table-container table {
     border-collapse: collapse;
     width: 100%; /* 親要素の幅いっぱいに広げる */
+    table-layout: fixed;
 }
 
 /* セルに適用されるスタイル */
