@@ -1144,7 +1144,7 @@ def show_race_page(race_id):
                     "username": uname,
                     "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{ user_map.get(uname) }/face.png"
                 }
-                for uname in vote_map.get(horse, [])
+                for uname in voted_users
             ]
     is_finalized = now >= cutoff_time
 
@@ -1431,6 +1431,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
