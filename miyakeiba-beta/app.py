@@ -1142,7 +1142,7 @@ def show_race_page(race_id):
             entry["voted_by"] = [
                 {
                     "username": uname,
-                    "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{ user_map.get(uname) }/face.png"
+                    "image_url": f"https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/user/{ user_map.get(uname) }/face.png"
                 }
                 for uname in voted_users
             ]
@@ -1237,27 +1237,27 @@ def show_race_page(race_id):
             vote_map_result[horse] = []
         vote_map_result[horse].append({
             "username": uname,
-            "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{uid}/face.png"
+            "image_url": f"https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/user/{uid}/face.png"
         })
     result['voted_by_first'] = vote_map_result.get(result.get('first_place'), [])
     if not result['voted_by_first']:
         result['voted_by_first'].append({
             "username": "dummy",
-            "image_url": "https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/dummy_transparent.png"
+            "image_url": "https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/icon/dummy.png"
         })
 
     result['voted_by_second'] = vote_map_result.get(result.get('second_place'), [])
     if not result['voted_by_second']:
         result['voted_by_second'].append({
             "username": "dummy",
-            "image_url": "https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/dummy_transparent.png"
+            "image_url": "https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/icon/dummy.png"
         })
 
     result['voted_by_third'] = vote_map_result.get(result.get('third_place'), [])
     if not result['voted_by_third']:
         result['voted_by_third'].append({
             "username": "dummy",
-            "image_url": "https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/dummy_transparent.png"
+            "image_url": "https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/icon/dummy.png"
         })
     video_url = get_video_url(race_id)
     #video_url = "https://www.youtube.com/watch?v=R9R63qB3j8k" # ★テスト用★
@@ -1431,6 +1431,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
