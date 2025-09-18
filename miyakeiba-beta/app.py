@@ -1259,6 +1259,20 @@ def show_race_page(race_id):
             "username": "dummy",
             "image_url": "https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/icon/dummy.png"
         })
+        
+    result['voted_by_fourth'] = vote_map_result.get(result.get('fourth_place'), [])
+    if not result['voted_by_fourth']:
+        result['voted_by_fourth'].append({
+            "username": "dummy",
+            "image_url": "https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/icon/dummy.png"
+        })
+
+    result['voted_by_fifth'] = vote_map_result.get(result.get('fifth_place'), [])
+    if not result['voted_by_fifth']:
+        result['voted_by_fifth'].append({
+            "username": "dummy",
+            "image_url": "https://raw.githubusercontent.com/mayo2451/Beta-miyakeiba/main/miyakeiba-beta/image/icon/dummy.png"
+        })
     video_url = get_video_url(race_id)
     #video_url = "https://www.youtube.com/watch?v=R9R63qB3j8k" # ★テスト用★
     logging.info(f"取得した動画URL: {video_url}")  # ★追加★
@@ -1431,6 +1445,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
