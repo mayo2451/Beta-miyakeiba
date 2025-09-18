@@ -51,15 +51,27 @@
             <td>4着</td>
             <td class="horse-name">{{ result.fourth_place }}</td>
             <td>—</td>
-            <td></td>
-            <td></td>
+            <td>—</td>
+            <td>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    {% for voter in result.voted_by_fourth %}
+                        <img src="{{ voter.image_url }}" class="face" alt="{{ voter.username }}" onerror="this.style.display='none';">
+                    {% endfor %}
+                </div>
+            </td>
         </tr>
         <tr>
             <td>5着</td>
             <td class="horse-name">{{ result.fifth_place }}</td>
             <td>—</td>
-            <td></td>
-            <td></td>
+            <td>—</td>
+            <td>
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    {% for voter in result.voted_by_fifth %}
+                        <img src="{{ voter.image_url }}" class="face" alt="{{ voter.username }}" onerror="this.style.display='none';">
+                    {% endfor %}
+                </div>
+            </td>
         </tr>
     </table>
 </div>
@@ -81,4 +93,5 @@
     </tr>
     {% endfor %}
 </table>
+
 
