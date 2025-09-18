@@ -1,6 +1,7 @@
 .entry_table table {
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
 }
 
 .entry_table td, .entry_table th {
