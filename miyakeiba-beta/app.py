@@ -1130,13 +1130,22 @@ def show_race_page(race_id):
         vote_map[horse].append(uname)
     for entry in entries:
         horse = entry["horse_name"]
-        entry["voted_by"] = [
-            {
-                "username": uname,
-                "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{ user_map.get(uname) }/face.png"
-            }
-            for uname in vote_map.get(horse, [])
-        ]
+        voted_users = vote_map.get(horse, [])
+        if not voted_users:
+            entry["voted_by"] = [
+                {
+                    "username": "dummy",
+                    "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/icon/透明.png"
+                }
+            ]
+        else:
+            entry["voted_by"] = [
+                {
+                    "username": uname,
+                    "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{ user_map.get(uname) }/face.png"
+                }
+                for uname in vote_map.get(horse, [])
+            ]
     is_finalized = now >= cutoff_time
 
     cur.execute("SELECT horse_name FROM race_entries WHERE race_id = ?", (race_id,))
@@ -1230,15 +1239,28 @@ def show_race_page(race_id):
             "username": uname,
             "image_url": f"https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/{uid}/face.png"
         })
-    if result.get('first_place'):
-        result['voted_by_first'] = vote_map_result.get(result['first_place'], [])
-    if result.get('second_place'):
-        result['voted_by_second'] = vote_map_result.get(result['second_place'], [])
-    if result.get('third_place'):
-        result['voted_by_third'] = vote_map_result.get(result['third_place'], [])
+    result['voted_by_first'] = vote_map_result.get(result.get('first_place'), [])
+    if not result['voted_by_first']:
+        result['voted_by_first'].append({
+            "username": "dummy",
+            "image_url": "https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/dummy_transparent.png"
+        })
 
-    #video_url = get_video_url(race_id)
-    video_url = "https://www.youtube.com/watch?v=R9R63qB3j8k" # ★テスト用★
+    result['voted_by_second'] = vote_map_result.get(result.get('second_place'), [])
+    if not result['voted_by_second']:
+        result['voted_by_second'].append({
+            "username": "dummy",
+            "image_url": "https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/dummy_transparent.png"
+        })
+
+    result['voted_by_third'] = vote_map_result.get(result.get('third_place'), [])
+    if not result['voted_by_third']:
+        result['voted_by_third'].append({
+            "username": "dummy",
+            "image_url": "https://raw.githubusercontent.com/mayo2451/miyakeiba/main/01miyakeiba%20-%20v1.1/Miyakeiba_app/image/user/dummy_transparent.png"
+        })
+    video_url = get_video_url(race_id)
+    #video_url = "https://www.youtube.com/watch?v=R9R63qB3j8k" # ★テスト用★
     logging.info(f"取得した動画URL: {video_url}")  # ★追加★
     video_id = None
     if video_url:
@@ -1409,6 +1431,7 @@ def schedule():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
