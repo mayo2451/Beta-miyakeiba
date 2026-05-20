@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ year }}年{{ month }}月のカレンダー</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .mon { color: red; }
+        .sun { color: blue; }
+        .calendar {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ year }}年{{ month }}月のカレンダー</h1>
+    <div class="calendar">
+        {{ calendar_html|safe }}
+    </div>
+</body>
+
+</html>

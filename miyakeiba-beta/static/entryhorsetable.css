@@ -1,0 +1,79 @@
+.entry_table table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.entry_table td, .entry_table th {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    color: black;
+}
+.entry_table td {
+    height: 30px;
+    min-height: 30px;
+    line-height: 1; /* ★この行を追加★ */
+    white-space: nowrap; /* ★この行を追加★ */
+}
+.tiny {
+    width: 3%
+}
+.entry_table th {
+    background-color: #f0f0f0;
+}
+.entry_table .horse-name {
+    width: 30%;
+    text-align: left;
+}
+.entry_table {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+.face {
+    width: auto; 
+    height: 30px; 
+    margin-right:5px;
+}
+tr.waku-1,
+td.waku-1,
+td.waku-1.soft-bg { 
+    background-color: rgba(255, 255, 255, 0.5); 
+}
+tr.waku-2,
+td.waku-2,
+td.waku-2.soft-bg { 
+    background-color: rgba(0, 0, 0, 0.3);
+}
+tr.waku-3,
+td.waku-3,
+td.waku-3.soft-bg { 
+    background-color: rgba(255, 51, 51, 0.3);
+}
+tr.waku-4,
+td.waku-4,
+td.waku-4.soft-bg { 
+    background-color: rgba(51, 51, 255, 0.3);
+}
+tr.waku-5,
+td.waku-5,
+td.waku-5.soft-bg { 
+    background-color: rgba(255, 255, 102, 0.3); 
+}
+tr.waku-6,
+td.waku-6,
+td.waku-6.soft-bg { 
+    background-color: rgba(102, 204, 102, 0.3);
+}
+tr.waku-7,
+td.waku-7,
+td.waku-7.soft-bg { 
+    background-color: rgba(255, 153, 51, 0.3);
+}
+tr.waku-8,
+td.waku-8,
+td.waku-8.soft-bg { 
+    background-color: rgba(255, 153, 204, 0.3);
+}

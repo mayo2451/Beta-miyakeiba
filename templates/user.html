@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>マイページ</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='mypagestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        {% include 'menubar.html' %}
+        {% if is_current_user %}
+        {% else %}
+            <h2 class="username">{{ username }}</h2>
+        {% endif %}
+        <h2>総合成績</h2>
+        {% if total_stats %}
+            <table border="1" cellpadding="8">
+              <tr>
+                <th class="short">出走数</th>
+                <th class="short">合計</th>
+                <th class="short">1着</th>
+                <th class="short">2着</th>
+                <th class="short">3着</th>
+                <th class="short">掲示板</th>
+                <th class="short">着外</th>
+                <th class="rate">勝率</th>
+                <th class="rate">複勝率</th>
+              </tr>
+              <tr>
+                <td>{{ total_stats.total_races }}</td>
+                <td>{{ total_stats.total_score }}</td>
+                <td>{{ total_stats.first }}</td>
+                <td>{{ total_stats.second }}</td>
+                <td>{{ total_stats.third }}</td>
+                <td>{{ total_stats.bbs }}</td>
+                <td>{{ total_stats.out_of_place }}</td>
+                <td>{{ (total_stats.win_rate * 100) | round(2) }}%</td>
+                <td>{{ (total_stats.placing_bets_rate * 100) | round(2) }}%</td>
+              </tr>
+            {% if user_stats_filtered %}
+              <tr>
+                <td>{{ user_stats_filtered.total_races }}</td>
+                <td>{{ user_stats_filtered.total_score }}</td>
+                <td>{{ user_stats_filtered.first }}</td>
+                <td>{{ user_stats_filtered.second }}</td>
+                <td>{{ user_stats_filtered.third }}</td>
+                <td>{{ user_stats_filtered.bbs }}</td>
+                <td>{{ user_stats_filtered.out_of_place }}</td>
+                <td>{{ (user_stats_filtered.win_rate * 100) | round(2) }}%</td>
+                <td>{{ (user_stats_filtered.placing_bets_rate * 100) | round(2) }}%</td>
+              </tr>
+            {% endif %}
+            </table>
+        {% else %}
+            <p>成績データがありません。</p>
+        {% endif %}
+        <h2>出走履歴</h2>
+        {% if entries %}
+            <table border="1">
+                <tr>
+                    <th class="date">日付</th>
+                    <th class="tiny">開催</th>
+                    <th class="race_name">レース名</th>
+                    <th class="horse_name">本命馬</th>
+                    <th class="tiny">着順</th>
+                    <th class="tiny">得点</th>
+                </tr>
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry[0] }}</td>
+                        <td>{{ entry[1] }}</td>
+                        <td class="left">
+                            <a href="{{ url_for('race.show_race', race_id=entry[7]) }}">
+                                {{ entry[2] }}
+                            </a>
+                            {% if entry[6]==1 %}
+                                <span>〇</span>
+                            {% endif %}
+                        </td>
+                        <td class="left">{{ entry[3] }}</td>
+                        <td>
+                            {% if entry[4] == 0 %}
+                                着外
+                            {% else %}
+                                {{ entry[4] }} 着
+                            {% endif %}
+                        </td>
+                        <td>{{ entry[5] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>まだ本命馬を提出していません。</p>
+        {% endif %}
+        {% if current_user.role == 'admin' %}
+            <div class="admin-controls" style="margin-top: 20px; padding: 15px; border: 1px solid #dc3545; background-color: #f8d7da; border-radius: 5px;">
+                <h5 style="color: #721c24; margin-top: 0;">管理者専用メニュー（CSV一括出力）</h5>
+                <p style="font-size: 0.9rem; color: #721c24;">データベースのリアルタイムな最新情報をCSVでダウンロードできます。</p>
+                
+                <a href="{{ url_for('race.download_admin_csv', table_name='race_entries') }}" class="btn btn-danger btn-sm">
+                    <i class="fas fa-file-csv"></i> 出走馬一覧
+                </a>
+                <a href="{{ url_for('race.download_admin_csv', table_name='horseentrybefore') }}" class="btn btn-danger btn-sm">
+                    <i class="fas fa-file-csv"></i> 特別登録馬一覧
+                </a>
+                <a href="{{ url_for('race.download_admin_csv', table_name='race_result') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-file-csv"></i> レース結果一覧
+                </a>
+                <a href="{{ url_for('race.download_admin_csv', table_name='race_schedule') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-file-csv"></i> レース予定一覧
+                </a>
+                <a href="{{ url_for('race.download_admin_csv', table_name='raise_horse') }}" class="btn btn-danger btn-sm">
+                    <i class="fas fa-file-csv"></i> 各人投票馬一覧
+                </a>
+                <a href="{{ url_for('race.download_admin_csv', table_name='users') }}" class="btn btn-danger btn-sm">
+                    <i class="fas fa-file-csv"></i> ユーザー一覧
+                </a>
+            </div>
+            <div class="admin-controls" style="margin-top: 20px; padding: 15px; border: 1px solid #dc3545; background-color: #f8d7da; border-radius: 5px;">
+                <h5 style="color: #721c24; margin-top: 0;">管理者専用メニュー</h5>
+                <p style="font-size: 0.9rem; color: #721c24; margin-top: 15px; font-weight: bold;">⚠️ 注意：CSVデータをDBに上書き読み込みします（現在のDBデータは消去されます）</p>
+                <form action="{{ url_for('race.admin_restore_csv', table_name='race_entries') }}" method="POST" style="display:inline;" onsubmit="return confirm('本当にCSVから特別登録馬を復元しますか？現在のデータは上書きされます。');">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-import"></i> 出走馬をCSV読込
+                    </button>
+                </form>
+                <form action="{{ url_for('race.admin_restore_csv', table_name='horseentrybefore') }}" method="POST" style="display:inline;" onsubmit="return confirm('本当にCSVから特別登録馬を復元しますか？現在のデータは上書きされます。');">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-import"></i> 特別登録馬をCSV読込
+                    </button>
+                </form>
+                <form action="{{ url_for('race.admin_restore_csv', table_name='race_result') }}" method="POST" style="display:inline;" onsubmit="return confirm('本当にCSVからレース予定一覧を復元しますか？現在のデータは上書きされます。');">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-import"></i> レース結果をCSV読込
+                    </button>
+                </form>   
+                <form action="{{ url_for('race.admin_restore_csv', table_name='race_schedule') }}" method="POST" style="display:inline;" onsubmit="return confirm('本当にCSVからレース予定一覧を復元しますか？現在のデータは上書きされます。');">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-import"></i> レース予定をCSV読込
+                    </button>
+                </form>
+                <form action="{{ url_for('race.admin_restore_csv', table_name='raise_horse') }}" method="POST" style="display:inline;" onsubmit="return confirm('本当にCSVからレース予定一覧を復元しますか？現在のデータは上書きされます。');">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-import"></i> 各人投票馬をCSV読込
+                    </button>
+                </form>
+                <form action="{{ url_for('race.admin_restore_csv', table_name='users') }}" method="POST" style="display:inline;" onsubmit="return confirm('本当にCSVからレース予定一覧を復元しますか？現在のデータは上書きされます。');">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-file-import"></i> ユーザーをCSV読込
+                    </button>
+                </form>                      
+            </div>
+        {% endif %}
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+

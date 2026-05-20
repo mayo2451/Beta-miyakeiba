@@ -1,0 +1,89 @@
+.btn {
+    flex-grow: 1; /* ★この1行を追加★ - ボタンの幅を均等に広げる */
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    border-top: none;
+    border-left: none;
+    cursor: pointer;
+}
+.button-container {
+    display: flex;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    width: 100%;
+    justify-content: center;
+}
+/* btn-primary (アクティブなボタン) */
+.btn-primary {
+    background-color: #0d6efd; /* 青い背景色 */
+    color: #fff;              /* 白い文字色 */
+    font-weight: bold;         /* 文字を太くする */
+    border-color: #0d6efd;     /* 枠線の色 */
+}
+/* btn-outline-primary (非アクティブなボタン) */
+.btn-outline-primary {
+    background-color: transparent; /* 背景を透明に */
+    color: #000;                   /* 文字の色 */
+    border-color: #ccc;            /* 枠線の色 */
+}
+.btn:first-child {
+    border-left: none;
+    /* 最初のボタンの左側の線は消す */
+}
+.tabs-container {
+    width: 70%; /* 必要に応じて幅を調整 */
+    margin: 0 auto; /* ★この一行を追加★ - タブバー全体を中央に配置 */
+}
+.tab-content {
+    display: none; /* デフォルトではすべて非表示 */
+}
+.tab-content.active {
+    display: block; /* activeクラスがついたものだけ表示 */
+}
+.race_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 750px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+.race_info_left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.race_grade {
+    width: 35px;
+    height: 35px;
+}
+.race_info_right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: right;
+}
+.race_info_gd {
+    display: flex;
+    gap: 10px;
+}
+.race_date {
+    margine: 0;
+    font-size: 2.0rem;
+}
+.race_place,
+.race_ground,
+.race_distance {
+    margin: 0;
+    font-size: 1.2rem;
+}
+.race_name {
+    margine: 0;
+    font-size: 2.5rem;
+}

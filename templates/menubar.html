@@ -1,0 +1,23 @@
+<div class="menu_bar">
+    <nav>
+        <ul class="menu">
+            {% if current_user.is_authenticated %}
+                <li class="logged_in_user">
+                    <span class="user_name_display">{{ current_user.username }}</span>
+                </li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">ログイン</a></li>
+            {% endif %}
+            <li><a href="/">HOME</a></li>
+            <li><a href="{{ url_for('race.schedule') }}">レース一覧</a></li>
+            <li><a href="{{ url_for('user.allusers') }}">全体成績</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('user.user_profile', user_id=current_user.id) }}">マイページ</a></li>
+            {% endif %}
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <li><a href="{{ url_for('race.insert_race') }}">予定追加</a></li>
+                <li><a href="{{ url_for('race.entry_form') }}">出馬表作成</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

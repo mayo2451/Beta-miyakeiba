@@ -1,0 +1,9 @@
+<div class="login-status">
+    {% if current_user.is_authenticated %}
+        <span>ようこそ、{{ current_user.username }}さん</span>
+        <a href="{{ url_for('logout') }}" style="margin-left: 10px;">ログアウト</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">ログイン</a>
+        <a href="{{ url_for('register') }}" style="margin-left: 10px;">新規登録</a>
+    {% endif %}
+</div>

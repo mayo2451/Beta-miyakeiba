@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% from 'macros/table_macros.html' import score_table %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大ヴァロ予想王</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='alluserscore.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        {% include 'menubar.html' %}
+        <h2>条件付き成績で絞り込み</h2>
+        <form method="get" action="{{ url_for('user.filtered_users') }}">
+            <label for="race_type">グレード:</label>
+            <select name="race_type" id="race_type">
+                <option value="" {% if not request.args.get('race_type') %}selected{% endif %}>すべて</option>
+                {% for rt in grades %}
+                    <option value="{{ rt }}" {% if request.args.get('race_type') == rt %}selected{% endif %}>{{ rt }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="venue">開催場:</label>
+            <select name="venue" id="venue">
+                <option value="" {% if not request.args.get('venue') %}selected{% endif %}>すべて</option>
+                {% for place in places %}
+                    <option value="{{ place }}" {% if request.args.get('venue') == place %}selected{% endif %}>{{ place }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="start_date">開始日：</label>
+            <input type="date" id="start_date" name="start_date" value="{{ request.args.get('start_date') or '' }}">
+            <label for="start_date">終了日：</label>
+            <input type="date" id="end_date" name="end_date" value="{{ request.args.get('end_date') or '' }}">
+            <button type="submit">絞り込み</button>
+            <button type="button" onclick="window.location.href='{{ url_for('user.allusers') }}'" style="margin-left: 10px;">条件をリセット</button>
+        </form>
+        <h2>全成績</h2>
+        {% if all_users %}
+            {{ score_table(all_users, 'all_score') }}
+        {% else %}
+            <p>データがありません</p>
+        {% endif %}
+
+        {% if filtered_users is defined %}
+            <h2>条件付き成績</h2>
+            {% if filtered_users %}
+                {{ score_table(filtered_users, 'filtered_score') }}
+            {% else %}
+                <p>条件に該当する成績がありませんでした。</p>
+            {% endif %}
+        {% endif %}
+    <script src="{{ url_for('static', filename='js/alluserscore.js') }}"></script>
+    </body>
+
+</html>
+
+
+
+
+

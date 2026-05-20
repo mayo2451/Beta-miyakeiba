@@ -1,0 +1,61 @@
+table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 1750px;
+    margin: 0 auto;
+}
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+th.short {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    width: 10%; 
+}
+th.rate {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    width: 15%; 
+}
+th.tiny {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    width: 5%; 
+}
+th.date {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    width: 8%; 
+}
+th.race_name {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    width: 25%; 
+}
+th.horse_name {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    width: 15%; 
+}
+td.left {
+    text-align: left;
+}
+.menu a.active {
+    color: rgb(49, 49, 49);
+    font-weight: bold;
+
+}

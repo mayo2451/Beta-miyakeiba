@@ -1,0 +1,31 @@
+.header_image_wrapper {
+  margin-left: calc(50% - 480px); 
+  padding-right: 20px;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: auto;
+}
+.header_logo {
+  width: auto;
+  height: 125px;
+  margin: 0;
+  padding: 0;
+  padding-left: 20px;
+  display: block;
+  vertical-align: middle;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  /*padding-left: 10px;*/
+  background-color: #164100;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+}

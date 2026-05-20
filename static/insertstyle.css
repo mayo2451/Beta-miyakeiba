@@ -1,0 +1,56 @@
+table { 
+    border-collapse: collapse; 
+    width: 100%; 
+    max-width: 100%;
+    margin-top: 20px; 
+}
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+}
+th { 
+    background-color: #f0f0f0; 
+}
+.schedule_list td.left {
+    text-align: left;
+}
+.schedule_list td.middle {
+    text-align: center;
+}
+.schedule_list td.right {
+    text-align: right;
+}
+.short-input { 
+    width: 90px; 
+}
+.tiny-input { 
+    width: 50px; 
+}
+.menu a.active {
+    color: rgb(49, 49, 49);
+    font-weight: bold;
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.ok-mark {
+    display: none;
+    color: #E44;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.select-race-cb:checked + .ok-mark {
+    display: inline;
+}
+.schedule_list input {
+    padding: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.select-race-cb:disabled {
+    display: none;
+}

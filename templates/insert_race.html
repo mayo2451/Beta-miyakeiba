@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>大ヴァロ予想王</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='insertstyle.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        {% include 'menubar.html' %}
+        
+        <form action="{{ url_for('race.insert_race') }}" method="post">
+            <table id="raceTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Place</th>
+                        <th>Field</th>
+                        <th>Dis</th>
+                        <th>RNum</th>
+                        <th>Grade</th>
+                        <th>Name</th>
+                        <th>Time</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="date" name="race_date[]" class="short-input" required></td>
+                        <td><input type="text" name="race_place[]" class="tiny-input" required></td>
+                        <td><input type="text" name="race_ground[]" class="tiny-input" required></td>
+                        <td><input type="number" name="race_distance[]" class="tiny-input" required></td>
+                        <td><input type="number" name="race_number[]" class="tiny-input"></td>
+                        <td><input type="text" name="race_grade[]" class="tiny-input" required></td>
+                        <td><input type="text" name="race_name[]" required></td>
+                        <td><input type="time" name="start_time[]" class="short-input"></td>
+                        <td><button type="button" onclick="removeRow(this)">削除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" onclick="addRow()">行の追加</button>
+            <input type="submit" value="追加">
+        </form>
+        
+        <hr>
+        <h2>登録済みレース一覧</h2>
+        {% if races %}
+            <form id="bulk-save-form" action="{{ url_for('race.save_schedule_races') }}" method="post">
+                <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
+                    <button type="button" id="toggle-edit-btn" style="background-color: #4AF; color: white; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">
+                        🛠️ 編集モードに切り替え
+                    </button>
+                    
+                    <button type="submit" id="bulk-save-btn" style="display: none; background-color: #2B2; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer;">
+                        💾 変更を一括保存する
+                    </button>
+                </div>
+                <table class="schedule_list">
+                    <thead>
+                        <tr>
+                            <th>Sel</th>
+                            <th>Date</th>
+                            <th>Place</th>
+                            <th>Field</th>
+                            <th>Dis</th>
+                            <th>RNum</th>
+                            <th>Grade</th>
+                            <th>Name</th>
+                            <th>Time</th>
+                            <th>Del</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for race in races %}
+                            <tr>
+                                <input type="hidden" name="race_id[]" value="{{ race.id }}">
+
+                                <td class="middle" style="vertical-align: middle;">
+                                    <div class="checkbox-container">
+                                        <input type="checkbox" name="selected_ids[]" value="{{ race.id }}" class="select-race-cb" {% if race.is_selected == 1 %}checked{% endif %} disabled>
+                                        <span class="ok-mark">〇</span>
+                                    </div>
+                                </td>
+
+                                <td class="left">
+                                    <span class="view-mode">{{ race.race_date }}</span>
+                                    <input type="date" name="race_date[]" value="{{ race.race_date }}" class="edit-mode-input" style="width: 110px; display: none;">
+                                </td>
+
+                                <td class="middle">
+                                    <span class="view-mode">{{ race.race_place }}</span>
+                                    <input type="text" name="race_place[]" value="{{ race.race_place }}" class="edit-mode-input" style="width: 50px; text-align: center; display: none;">
+                                </td>
+
+                                <td class="middle">
+                                    <span class="view-mode">{{ race.race_ground }}</span>
+                                    <input type="text" name="race_ground[]" value="{{ race.race_ground }}" class="edit-mode-input" style="width: 50px; text-align: center; display: none;">
+                                </td>
+
+                                <td class="right">
+                                    <span class="view-mode">{{ race.race_distance }}</span>
+                                    <input type="number" name="race_distance[]" value="{{ race.race_distance }}" class="edit-mode-input" style="width: 60px; text-align: right; display: none;">
+                                </td>
+
+                                <td class="middle">
+                                    <span class="view-mode">{{ race.race_number if race.race_number else '' }}</span>
+                                    <input type="number" name="race_number[]" value="{{ race.race_number if race.race_number else '' }}" min="1" max="12" class="edit-mode-input" style="width: 45px; text-align: center; display: none;">
+                                </td>
+
+                                <td class="middle">
+                                    <span class="view-mode">{{ race.race_grade }}</span>
+                                    <input type="text" name="race_grade[]" value="{{ race.race_grade }}" class="edit-mode-input" style="width: 50px; text-align: center; display: none;">
+                                </td>
+
+                                <td class="left">
+                                    <span class="view-mode">{{ race.race_name }}</span>
+                                    <input type="text" name="race_name[]" value="{{ race.race_name }}" class="edit-mode-input" style="width: 95%; display: none;">
+                                </td>
+
+                                <td class="right">
+                                    <span class="view-mode">{{ race.start_time if race.start_time else '' }}</span>
+                                    <input type="time" name="start_time[]" value="{{ race.start_time if race.start_time else '' }}" class="edit-mode-input" style="width: 80px; display: none;">
+                                </td>
+
+                                <td class="middle">
+                                    <button type="button" onclick="if(confirm('本当に削除しますか？')){document.getElementById('del-form-{{ race.id }}').submit();}">削除</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        {% for race in races %}
+            <form id="del-form-{{ race.id }}" action="{{ url_for('race.delete_race') }}" method="post" style="display:none;">
+                <input type="hidden" name="race_id" value="{{ race.id }}">
+            </form>
+        {% endfor %}
+        {% else %}
+            <p>レースはまだ登録されていません。</p>
+        {% endif %}
+        <script>
+            function addRow() {
+                const table = document.getElementById('raceTable').getElementsByTagName('tbody')[0];
+                const newRow = table.rows[0].cloneNode(true);
+                Array.from(newRow.querySelectorAll('input')).forEach(input => input.value = '');
+                table.appendChild(newRow);
+            }
+
+            function removeRow(button) {
+                const row = button.closest('tr');
+                const table = document.getElementById('raceTable').getElementsByTagName('tbody')[0];
+                if (table.rows.length > 1) {
+                    row.remove();
+                } else {
+                    alert("少なくとも1行は必要です");
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const toggleEditBtn = document.getElementById('toggle-edit-btn');
+                const bulkSaveBtn = document.getElementById('bulk-save-btn');
+                const viewModes = document.querySelectorAll('.view-mode');
+                const editModeInputs = document.querySelectorAll('.edit-mode-input');
+                const checkboxes = document.querySelectorAll('.select-race-cb');
+                
+                // 💡 修正点：エラーの最大の原因。定義されていなかったフォーム要素の変数をここで宣言
+                const bulkSaveForm = document.getElementById('bulk-save-form');
+                
+                let isEditMode = false;
+
+                // 💡 エンターキーによる誤動作（勝手にトグルが開閉したり送信される挙動）を確実にブロック
+                if (bulkSaveForm) {
+                    bulkSaveForm.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault(); // エンターの通常挙動を完全にキャンセル
+                            return false;
+                        }
+                    });
+                }
+                
+                toggleEditBtn.addEventListener('click', function() {
+                    isEditMode = !isEditMode;
+
+                    if (isEditMode) {
+                        // 【編集モードON】
+                        toggleEditBtn.textContent = '❌ 編集をキャンセル';
+                        toggleEditBtn.style.backgroundColor = '#999';
+                        bulkSaveBtn.style.display = 'inline-block'; // 保存ボタンを表示
+
+                        // テキストを隠して、入力欄を表示
+                        viewModes.forEach(el => el.style.display = 'none');
+                        editModeInputs.forEach(el => el.style.display = 'inline-block');
+                        
+                        checkboxes.forEach(cb => cb.disabled = false);
+                    } else {
+                        // 【編集モードOFF】
+                        toggleEditBtn.textContent = '🛠️ 編集モードに切り替え';
+                        toggleEditBtn.style.backgroundColor = '#4AF';
+                        bulkSaveBtn.style.display = 'none'; // 保存ボタンを隠す
+
+                        // 入力欄を隠して、テキストを表示
+                        viewModes.forEach(el => el.style.display = 'inline-block');
+                        editModeInputs.forEach(el => el.style.display = 'none');
+                        
+                        checkboxes.forEach(cb => cb.disabled = true);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

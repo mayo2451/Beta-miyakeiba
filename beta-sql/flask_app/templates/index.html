@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>メモ帳</title>
+</head>
+<body>
+    <h1>メモ一覧</h1>
+    <a href="{{ url_for('add_note') }}">＋ 新しいメモ</a>
+    <ul>
+        {% for note in notes %}
+            <li><strong>{{ note[1] }}</strong>: {{ note[2] }}</li>
+        {% else %}
+            <li>メモがありません。</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

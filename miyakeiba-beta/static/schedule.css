@@ -1,0 +1,11 @@
+.calendar-table td:not(.sat):not(.sun) {
+    width: 10%; 
+}
+
+/* 土曜日と日曜日の幅を相対的に広くする */
+.calendar-table td.sat {
+    width: 25%; 
+}
+.calendar-table td.sun {
+    width: 25%; 
+}
